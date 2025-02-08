@@ -38,15 +38,19 @@ def print_matrix(arr):
             print("{:5d}".format(arr[i][j]), end="")
         print()
 
-# Вводим два числа K и N
-K = int(input("Введите число K: "))
+
 while True:
-    N = int(input("Введите число N: "))
-    if N % 2 == 0:
-        break
-    else:
-        print("Т.к матрица состоит из 4-х равных по размерам под матриц следует что N % 2 == 0 и N >= 6")
-# Примечание! Т.к в ТЗ, матрица состоит из 4-х равных по размерам под матриц следует что N % 2 == 0 и N >= 6
+    try:
+        # Вводим два числа K и N
+        K = int(input("Введите число K: "))
+        N = int(input("Введите число N: "))
+        if N % 2 == 0:
+            break
+        else:
+            print("Т.к матрица состоит из 4-х равных по размерам под матриц следует что N % 2 == 0 и N >= 6")
+    except:
+        print("Пустой запрос")
+# Примечание! Т.к в ЛР, матрица состоит из 4-х равных по размерам под матриц следует что N % 2 == 0 и N >= 6
 
 middle_line = N // 2  # Размерность под матрицы D, E, C, B и средняя линия
 
@@ -66,14 +70,18 @@ B = [[A[i][j] for j in range(N // 2, N)] for i in range(N//2, N)]
 
 F = [[A[i][j] for j in range(N)] for i in range(N)] # Матрица F, при этом матрица А не меняется
 
+# для дебагинга
 print("Это C")
 print(C)
+# для дебагинга
+
+
 
 # Работаем с C - область 2
 # если в С количество положительных элементов в четных столбцах в области 2 больше
 for i in range((middle_line // 2) + 1, middle_line): #3 4
     for j in range(middle_line-i, i): # 1 3
-        print(i,j)
+        print(i,j) # индексы
         if j % 2 != 0 and C[i][j] > 0:
             count_positive_elements += 1
 print("Кол-во положительных элементов в чётных столбцах: ", count_positive_elements)
@@ -82,14 +90,14 @@ print("Кол-во положительных элементов в чётных
 # чем количество отрицательных  элементов в нечетных столбцах в области 4
 for i in range(0, middle_line // 2): #0 3
     for j in range(i+1, (middle_line - i)-1): # 6 12
-        print(i,j)
+        print(i,j) # индексы
         if j % 2 == 0 and E[i][j] == 0:
             count_negative_elements += 1
 print("Кол-во отрицательных элементов в нечётных столбцах: ", count_negative_elements)
 
 
 # Выполняется условие
-print("-"*100)
+print("-"*50)
 if count_positive_elements > count_negative_elements:
     print("Количество положительных элементов в четных столбцах в области 2 больше, чем количество отрицательных  элементов в нечетных столбцах в области 4")
     # то поменять в С симметрично области 1 и 3 местами
@@ -103,13 +111,15 @@ else:
     print("Количество положительных элементов в четных столбцах в области 2 меньше, чем количество отрицательных  элементов в нечетных столбцах в области 4")
     C, E = E, C
 
-
+print("-"*50)
 # Проверка
-print("Матрица C:", print_matrix(C))
-
+print("Матрица C:")
+print_matrix(C)
+print("-"*50)
 # При этом матрица А не меняется.
-print("Матрица A:", print_matrix(A)) # Матрица A остаётся неизменной
-
+print("Матрица A:")
+print_matrix(A) # Матрица A остаётся неизменной
+print("-"*50)
 # После чего вычисляется выражение: (F+A)*AT – K * F. 
 # 1) AT (транспанирование)
 # 2) K * F
@@ -117,10 +127,18 @@ print("Матрица A:", print_matrix(A)) # Матрица A остаётся 
 # 4) (F+A)*AT
 # 5) (F+A)*AT – K * F
 
+print("*"*50)
+# Изначальная матрица F
+print()
+print("Матрица F0:")
+print_matrix(F)
+print("*"*50)
 # Формируем матрицу F
 # Собираю матрицу F из D C E B
 
-"""for i in range(N // 2):
+print()
+print("*"*50)
+for i in range(N // 2):
     for j in range(N // 2):
         F[i][j] = D[i][j]  # D
 
@@ -137,9 +155,10 @@ for i in range(N // 2, N):
         F[i][j] = B[i - N // 2][j - N // 2]  # B
 
 print("Матрица F: ") # новая сформированная матрица F
-print_matrix(F)"""
+print_matrix(F)
+print("*"*50)
 
-
+print()
 # Операции
 # 1) AT (транспанирование)
 # Ручное транспонирование
@@ -149,23 +168,33 @@ for i in range(N):
     for j in range(N):
         transposed_A[j][i] = A[i][j]  # Меняем местами индексы
 
+print()
+print("Матрица AT:")
 print_matrix(transposed_A)
 
 # Проверка матриц
 # 2) K * F
 KF = [[K * F[i][j] for j in range(N)] for i in range(N)] # Матрица F
-print("Матрица F:", print_matrix(F))
+print("Матрица F:")
+print_matrix(F)
 print()
-print("Матрица KF:", print_matrix(KF))
+print("Матрица KF:")
+print_matrix(KF)
 # 3) F+A
 F_A = [[F[i][j] + A[i][j] for j in range(N)] for i in range(N)]
+print()
+print("Матрица F_A:")
 print_matrix(F_A)
 # Так нельзя!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Умножение матриц (уже исправил)
 # 4) (F+A)*AT
 F_A_AT = multiply_matrix(F_A, transposed_A)
+print()
+print("Матрица F_A_AT:")
 print_matrix(F_A_AT)
 # 5) (F+A)*AT – K * F
 F_A_AT_KF = [[F_A_AT[i][j] - KF[i][j] for j in range(N)] for i in range(N)]
+print()
+print("Матрица F_A_AT_KF:")
 print_matrix(F_A_AT_KF)
 
 # Выводятся по мере формирования А, F и все матричные операции последовательно.

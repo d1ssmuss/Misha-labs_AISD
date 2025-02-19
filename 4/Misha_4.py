@@ -68,13 +68,10 @@ f = copy.deepcopy(a)
 # Работаем с C
 for i in range(0, len(c)):
     for j in range(0, len(c)):
-        print(i,j)
         if j % 2 == 0 and c[i][j] > 0: # нечётные столбцы
             count_of_positive_elements += 1
         elif j % 2 == 1 and c[i][j] < 0: # нечётные столбцы
             count_of_negative_elements += 1
-
-print(count_of_positive_elements, count_of_negative_elements)
 
 
 if count_of_positive_elements > count_of_negative_elements:

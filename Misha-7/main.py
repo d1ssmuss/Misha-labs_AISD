@@ -65,34 +65,30 @@ def on_generate():
     for day, combo in plan.items():
         output_text.insert(tk.END, f"{day}: {combo if combo else 'Нет мороженого'}\n")
 
-# Создание основного окна
+
 root = tk.Tk()
 root.title("План поедания мороженого")
 root.geometry('%dx%d+%d+%d' % (900, 900, 470, 70))
 
-# Создание метки и текстового поля для ввода ограничений
 restriction_label = tk.Label(root, text="Введите ограничения (через запятую)\n(в Понедельник и Пятницу ребёнок не может есть следующие брикеты соответственно):")
 restriction_label.pack()
 
 restriction_entry = tk.Entry(root, width=50)
 restriction_entry.pack()
 
-# Создание метки для отображения доступных брикетов
 available_ice_creams_label = tk.Label(root, text="Доступные брикеты мороженого:")
 available_ice_creams_label.pack()
 
 available_ice_creams_text = tk.Text(root, height=5, width=60)
 available_ice_creams_text.pack()
 available_ice_creams_text.insert(tk.END, "\n".join(ice_creams_with_ingredients.keys()))
-available_ice_creams_text.config(state=tk.DISABLED)  # Делаем текстовое поле только для чтения
+available_ice_creams_text.config(state=tk.DISABLED)
 
-# Создание кнопки для генерации плана
 generate_button = tk.Button(root, text="Сгенерировать план", command=on_generate)
 generate_button.pack()
 
-# Создание текстового поля для вывода с прокруткой
+
 output_text = scrolledtext.ScrolledText(root, width=60, height=20)
 output_text.pack()
 
-# Запуск основного цикла приложения
 root.mainloop()
